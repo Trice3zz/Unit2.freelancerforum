@@ -44,7 +44,7 @@ const freelancers = [
             const listItem = document.createElement("li");
             listItem.innerHTML = `${freelancer.name} - ${freelancer.occupation}(starting price:
             $${freelancer.startingPrice})`;
-            freelancerList.appendChild(listItem);
+            freelancerList.append(listItem);
         }
         updateAverageStartingPrice();
         
