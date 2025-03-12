@@ -1,53 +1,54 @@
-class Freelancer {
-    constructor (name, occupation, price) {
-      this.name = name;
-      this.occupation = occupation;
-      this.price = price;
-    }
-  }
-  
-  const Alice = new Freelancer ('Alice', 'Teacher', 30);
-  const Bob = new Freelancer ('Bob', 'Writer', 50);
-  const Carol = new Freelancer ('Carol', 'Programmer', 70);
-  
-  const freelancers = [Alice, Bob, Carol];
-  
-  const names = ['Zoe', 'Madison', 'Kennedy', 'Darius'];
-  const occupations = [
-    'Editor',
-    'Product Manager',
-    'QA Tester',
-    'Design Specialist',
-  ];
-  
-  const addFreelancer = freelancer => {
-  
-    const nameIndex = Math.floor (Math.random() * names.length);
-   
-    const occupationIndex = Math.floor (Math.random() * occupations.length);
+const freelancers = [
+    {name: "Alice", occupation: "Writer", startingPrice: 30},
+    {name: "Bob", occupation: "Teacher", startingPrice: 50},
+    {name: "Carol", occupation: "Programmer", startingPrice: 70}
+    ]
+    const freelancerList = document.getElementById("freelancer-list")
+    const updateAverageStartingPrice = () => {
+        
+        const totalStartingPrice = freelancers.reduce((sum, freelancer)=>{return sum+freelancer.startingPrice},0);
+        const averageStartingPrice = totalStartingPrice/freelancers.length;
     
-    const startingPrice = Math.floor (Math.random() * 13 * 10) + 30;
-
-    const newFreelancer = new Freelancer (
-      names[nameIndex],
-      occupations[occupationIndex],
-      startingPrice
-    );
-    freelancers.push (newFreelancer);
-  };
-  const getAverage = freelancer => {
-    return (freelancer.reduce (acc, this.price), 0) / freelancer.length;
-  };
-  
-  const renderFreelancers = () => {
-    freelancers.map = () => {
-      const freelancerDomElements = document.createElement ('li');
-      freelancerDomElements.innerHTML = `${freelancer.name} ${freelancer.occupation} $${freelancer.price}`;
-      return freelancerDomElements;
+        let averagePriceElement = document.getElementById('average-price')
+    
+        if (averagePriceElement){
+            averagePriceElement.innerHTML = `Average starting price: $${averageStartingPrice.toFixed(2)}`;
+        }
+        else{
+            averagePriceElement = document.createElement("p");
+            averagePriceElement.id = "average-price";
+            averagePriceElement.innerHTML = `Average starting price: $${averageStartingPrice.toFixed(2)}`;
+            document.body.appendChild(averagePriceElement);
+        }
     };
-    const freelancerListElement = document.getElementById('#freelancers');
-    freelancerListElement.replaceChildren(...freelancerDomElements);
-  };
-  
-  renderFreelancers();
-  setInterval(addFreelancer, 1000);
+    
+        const addNewFreelancer = () => {
+            const occupations = ["writer","programmer","designer","developer","quality"];
+            const names = ["Madison", "Darius","Kennedy","Rakaya","Zoe","Mariah","Jade","Jaden"];
+            const newFreelancer = {
+                name: names[Math.floor(Math.random()*names.length)],
+                occupation: occupations[Math.floor(Math.random()*occupations.length)],
+                startingPrice: Math.floor(Math.random()*101)+50
+            };
+            freelancers.push(newFreelancer);
+    
+        const listItem = document.createElement("li")
+        listItem.innerHTML = `${newFreelancer.name} - ${newFreelancer.occupation}(starting price: $${newFreelancer.startingPrice})`;
+        freelancerList.appendChild(listItem);
+    
+        updateAverageStartingPrice();
+        };
+    
+        for (let i = 0; i < freelancers.length; i++){
+            const freelancer = freelancers[i]
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `${freelancer.name} - ${freelancer.occupation}(starting price:
+            $${freelancer.startingPrice})`;
+            freelancerList.appendChild(listItem);
+        }
+        updateAverageStartingPrice();
+        
+        
+    
+        
+        setInterval(addNewFreelancer, 2000)
